@@ -41,7 +41,7 @@ cursor.execute("SELECT film_name, film_director FROM film ORDER BY film_director
 directors = cursor.fetchall()
 print("\n-- DISPLAYING Director RECORDS in Order --")
 for director in directors:
-    print("Film Name: {}\nDirector Name: {}\n".format(director[0], director [1]))
+    print("Film Name: {}\nDirector: {}\n".format(director[0], director [1]))
 
 db.close()
     
