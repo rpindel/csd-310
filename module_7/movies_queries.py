@@ -37,7 +37,7 @@ for shortFilm in shortFilms:
 
 ##query 4    
 cursor = db.cursor()
-cursor.execute("SELECT film_name, film_director FROM film ORDER BY film_director")
+cursor.execute("SELECT film_name, film_director FROM film GROUP BY film_director, film_name ORDER BY film_director ASC, film_name DESC")
 directors = cursor.fetchall()
 print("\n-- DISPLAYING Director RECORDS in Order --")
 for director in directors:
