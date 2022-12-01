@@ -26,25 +26,8 @@ cursor.execute("CREATE USER 'bacchus_user'@'localhost' IDENTIFIED WITH mysql_nat
 ##grant all privileges to the bacchus_wine database to bacchus_user on localhost
 cursor.execute("GRANT ALL PRIVILEGES ON bacchus_wine.* TO 'bacchus_user'@'localhost'")
 
-##create tables...
-cursor.execute("CREATE TABLE supplier (
-    Supplier_ID INT(11) NOT NULL,
-    Name VARCHAR(45) NOT NULL,
-    Street_Address_1 VARCHAR(35) NOT NULL,
-    Street_Address_2 VARCHAR(35),
-    Zip INT(5) NOT NULL,
-    Contact_First_Name VARCHAR(25) NOT NULL,
-    Contact_Last_Name VARCHAR(25) NOT NULL,
-    Phone_Number VARCHAR(15) NOT NULL,
-    Email_Address VARCHAR(45),
-    Order_Method ENUM(“Phone”,”Post”,”Online”),
-    Order_Method_Details VARCHAR(45),
-    Contract_Delivery_ETA BIT(1),
-    Contract_Delivery_ETA_Details VARCHAR(45),
-    Active BIT(1) NOT NULL,
-    
-    PRIMARY KEY(Supplier_ID)
-    );")
+##create tables
+cursor.execute("CREATE TABLE supply (Supplier_ID INT(11) NOT NULL, Name VARCHAR(45) NOT NULL, Street_Address_1 VARCHAR(35) NOT NULL, Street_Address_2 VARCHAR(35), Zip INT(5) NOT NULL, Contact_First_Name VARCHAR(25) NOT NULL, Contact_Last_Name VARCHAR(25) NOT NULL, Phone_Number VARCHAR(15) NOT NULL, Email_Address VARCHAR(45), Order_Method ENUM(“Phone”,”Post”,”Online”), Order_Method_Details VARCHAR(45), Contract_Delivery_ETA BIT(1), Contract_Delivery_ETA_Details VARCHAR(45), Active BIT(1) NOT NULL, PRIMARY KEY(Supplier_ID));")
 
 ##
 cursor.execute("CREATE TABLE supplies (
@@ -84,8 +67,7 @@ cursor.execute("CREATE TABLE supply_order (
         REFERENCES supplies(Supply_ID),
     CONSTRAINT fk_supplier
 	FOREIGN KEY(Supplier_ID)
-        REFERENCES supplier(Supplier_ID)
-    );")
+        REFERENCES supplier(Supplier_ID));")
         
 ##
 cursor.execute("CREATE TABLE supply_order_details (
