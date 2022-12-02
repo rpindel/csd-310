@@ -48,11 +48,11 @@ cursor.execute("USE bacchus_wine;")
 cursor.execute("CREATE TABLE supplier (Supplier_ID INT(11) NOT NULL, Name VARCHAR(45) NOT NULL, Street_Address_1 VARCHAR(35) NOT NULL, Street_Address_2 VARCHAR(35), Zip INT(5) NOT NULL, Contact_First_Name VARCHAR(25) NOT NULL, Contact_Last_Name VARCHAR(25) NOT NULL, Phone_Number VARCHAR(15) NOT NULL, Email_Address VARCHAR(45), Order_Method ENUM('Phone', 'Post', 'Online'), Order_Method_Details VARCHAR(45), Active BIT(1) NOT NULL, PRIMARY KEY(Supplier_ID));")
 
 ##
-cursor.execute("CREATE TABLE supplies (Supply_ID INT(11) NOT NULL, Name VARCHAR(25) NOT NULL, Description VARCHAR(45), Onhand_Quantity INT(11) NOT NULL, Unit_Price DECIMAL(6,2) NOT NULL, Supplier_ID INT(11) NOT NULL, Supply_Order_ID INT(20) NOT NULL, PRIMARY KEY(Supply_ID), CONSTRAINT fk_supplier FOREIGN KEY(Supplier_ID) REFERENCES supplier(Supplier_ID), CONSTRAINT fk_supply_order FOREIGN KEY(Supply_Order_ID) REFERENCES supply_order(Supply_Order_ID));")
+cursor.execute("CREATE TABLE supply_order (Supply_Order_ID INT(20) NOT NULL, Total_Cost DECIMAL(10,2) NOT NULL, Order_Date DATETIME NOT NULL, Order_Method ENUM('Phone', 'Post', 'Online'), Order_Tracking_Number VARCHAR(30) NOT NULL, Order_Delivery_Carrier VARCHAR(10), Order_Estimated_Delivery_Date DATETIME, Order_Actual_Delivery_Date DATETIME NOT NULL, Supply_ID INT(11) NOT NULL, Supplier_ID INT(11) NOT NULL, PRIMARY KEY(Supply_Order_ID), CONSTRAINT fk_supplies FOREIGN KEY(Supply_ID) REFERENCES supplies(Supply_ID), CONSTRAINT fk_supplier FOREIGN KEY(Supplier_ID) REFERENCES supplier(Supplier_ID));")
 
 ##
-cursor.execute("CREATE TABLE supply_order (Supply_Order_ID INT(20) NOT NULL, Total_Cost DECIMAL(10,2) NOT NULL, Order_Date DATETIME NOT NULL, Order_Method ENUM('Phone', 'Post', 'Online'), Order_Tracking_Number VARCHAR(30) NOT NULL, Order_Delivery_Carrier VARCHAR(10), Order_Estimated_Delivery_Date DATETIME, Order_Actual_Delivery_Date DATETIME NOT NULL, Supply_ID INT(11) NOT NULL, Supplier_ID INT(11) NOT NULL, PRIMARY KEY(Supply_Order_ID), CONSTRAINT fk_supplies FOREIGN KEY(Supply_ID) REFERENCES supplies(Supply_ID), CONSTRAINT fk_supplier FOREIGN KEY(Supplier_ID) REFERENCES supplier(Supplier_ID));")
-        
+cursor.execute("CREATE TABLE supplies (Supply_ID INT(11) NOT NULL, Name VARCHAR(25) NOT NULL, Description VARCHAR(45), Onhand_Quantity INT(11) NOT NULL, Unit_Price DECIMAL(6,2) NOT NULL, Supplier_ID INT(11) NOT NULL, Supply_Order_ID INT(20) NOT NULL, PRIMARY KEY(Supply_ID), CONSTRAINT fk_supplier FOREIGN KEY(Supplier_ID) REFERENCES supplier(Supplier_ID), CONSTRAINT fk_supply_order FOREIGN KEY(Supply_Order_ID) REFERENCES supply_order(Supply_Order_ID));")
+    
 ##
 cursor.execute("CREATE TABLE supply_order_details (PK_Supply_Order_ID INT(20) NOT NULL, PK_Supply_ID INT(11) NOT NULL, Quantity_Ordered INT(70) NOT NULL, PRIMARY KEY(Supply_Order_ID), PRIMARY KEY(Supply_ID));")
 
