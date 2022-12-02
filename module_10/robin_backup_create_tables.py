@@ -9,7 +9,7 @@ config = {
     "user" : "root",
     "password" : "mysqltest",
     "host" : "127.0.0.1",
-    "database" : "movies",
+    "database" : "bacchus_wine",
     "raise_on_warnings" : True
     }
     
@@ -37,20 +37,19 @@ cursor = db.cursor()
 ##cursor.execute("DROP TABLE IF EXISTS department;")
 ##cursor.execute("DROP TABLE IF EXISTS position;")
 
-##create bacchus_wine database
-cursor.execute("CREATE DATABASE bacchus_wine")
+cursor.execute("USE bacchus_wine;")
 
 ##create new user for bacchus winery
-cursor.execute("CREATE USER 'bacchus_user'@'localhost' IDENTIFIED WITH mysql_native_password BY 'mysqltest'")
+##cursor.execute("CREATE USER 'bacchus_user'@'localhost' IDENTIFIED WITH mysql_native_password BY 'mysqltest'")
 
 ##grant all privileges to the bacchus_wine database to bacchus_user on localhost
-cursor.execute("GRANT ALL PRIVILEGES ON bacchus_wine.* TO 'bacchus_user'@'localhost'")
+##cursor.execute("GRANT ALL PRIVILEGES ON bacchus_wine.* TO 'bacchus_user'@'localhost'")
 
 ##create tables
 cursor.execute("CREATE TABLE supply (Supplier_ID INT(11) NOT NULL, Name VARCHAR(45) NOT NULL, Street_Address_1 VARCHAR(35) NOT NULL, Street_Address_2 VARCHAR(35), Zip INT(5) NOT NULL, Contact_First_Name VARCHAR(25) NOT NULL, Contact_Last_Name VARCHAR(25) NOT NULL, Phone_Number VARCHAR(15) NOT NULL, Email_Address VARCHAR(45), Order_Method ENUM('Phone', 'Post', 'Online'), Order_Method_Details VARCHAR(45), Contract_Delivery_ETA BIT(1), Contract_Delivery_ETA_Details VARCHAR(45), Active BIT(1) NOT NULL, PRIMARY KEY(Supplier_ID));")
 
 ##
-cursor.execute("CREATE TABLE supplies (Supply_ID INT(11) NOT NULL, Name VARCHAR(25) NOT NULL, Description VARCHAR(45), Onhand_Quantity INT(11) NOT NULL, Unit_Price DECIMAL(6,2) NOT NULL, Supplier_ID INT(11) NOT NULL, Supply_Order_ID INT(20) NOT NULL, PRIMARY KEY(Supply_ID), CONSTRAINT fk_supplier FOREIGN KEY(Supplier_ID) REFERENCES supplier(Supplier_ID), CONSTRAINT fk_supply_order FOREIGN KEY(Supply_Order_ID) REFERENCES supply_order(Supply_Order_ID));")
+cursor.execute("CREATE TABLE supplies (Supply_ID INT NOT NULL, Name VARCHAR(25) NOT NULL, Description VARCHAR(45), Onhand_Quantity INT NOT NULL, Unit_Price DECIMAL(6,2) NOT NULL, Supplier_ID INT NOT NULL, Supply_Order_ID INT NOT NULL, PRIMARY KEY(Supply_ID), CONSTRAINT fk_supplier FOREIGN KEY(Supplier_ID) REFERENCES supplier(Supplier_ID), CONSTRAINT fk_supply_order FOREIGN KEY(Supply_Order_ID) REFERENCES supply_order(Supply_Order_ID));")
 
 ##
 cursor.execute("CREATE TABLE supply_order (Supply_Order_ID INT(20) NOT NULL, Total_Cost DECIMAL(10,2) NOT NULL, Order_Date DATETIME NOT NULL, Order_Method ENUM('Phone', 'Post', 'Online'), Order_Tracking_Number VARCHAR(30) NOT NULL, Order_Delivery_Carrier VARCHAR(10), Order_Estimated_Delivery_Date DATETIME, Order_Actual_Delivery_Date DATETIME NOT NULL, Supply_ID INT(11) NOT NULL, Supplier_ID INT(11) NOT NULL, PRIMARY KEY(Supply_Order_ID), CONSTRAINT fk_supplies FOREIGN KEY(Supply_ID) REFERENCES supplies(Supply_ID), CONSTRAINT fk_supplier FOREIGN KEY(Supplier_ID) REFERENCES supplier(Supplier_ID));")
