@@ -18,24 +18,24 @@ db = mysql.connector.connect(**config)
 cursor = db.cursor()
 
 ## drop statements
-cursor.execute("DROP DATABASE IF EXISTS 'bacchus_wine';")
-cursor.execute("DROP USER IF EXISTS 'bacchus_user'@'localhost';")
-cursor.execute("DROP TABLE IF EXISTS 'supplier';")
-cursor.execute("DROP TABLE IF EXISTS 'supplies';")
-cursor.execute("DROP TABLE IF EXISTS 'supply_order';")
-cursor.execute("DROP TABLE IF EXISTS 'supply_order_details';")
-cursor.execute("DROP TABLE IF EXISTS 'wine';")
-cursor.execute("DROP TABLE IF EXISTS 'batch';")
-cursor.execute("DROP TABLE IF EXISTS 'wine_order';")
-cursor.execute("DROP TABLE IF EXISTS 'wine_order_details';")
-cursor.execute("DROP TABLE IF EXISTS 'wine_distrbutor_details';")
-cursor.execute("DROP TABLE IF EXISTS 'distributor';")
-cursor.execute("DROP TABLE IF EXISTS 'employee';")
-cursor.execute("DROP TABLE IF EXISTS 'employe_alternate';")
-cursor.execute("DROP TABLE IF EXISTS 'employee_time_worked';")
-cursor.execute("DROP TABLE IF EXISTS 'zip_lookup';")
-cursor.execute("DROP TABLE IF EXISTS 'department';")
-cursor.execute("DROP TABLE IF EXISTS 'position';")
+##cursor.execute("DROP DATABASE IF EXISTS 'bacchus_wine';")
+##cursor.execute("DROP USER IF EXISTS 'bacchus_user'@'localhost';")
+##cursor.execute("DROP TABLE IF EXISTS supplier;")
+##cursor.execute("DROP TABLE IF EXISTS supplies;")
+##cursor.execute("DROP TABLE IF EXISTS supply_order;")
+##cursor.execute("DROP TABLE IF EXISTS supply_order_details;")
+##cursor.execute("DROP TABLE IF EXISTS wine;")
+##cursor.execute("DROP TABLE IF EXISTS batch;")
+##cursor.execute("DROP TABLE IF EXISTS wine_order;")
+##cursor.execute("DROP TABLE IF EXISTS wine_order_details;")
+##cursor.execute("DROP TABLE IF EXISTS wine_distrbutor_details;")
+##cursor.execute("DROP TABLE IF EXISTS distributor;")
+##cursor.execute("DROP TABLE IF EXISTS employee;")
+##cursor.execute("DROP TABLE IF EXISTS employe_alternate;")
+##cursor.execute("DROP TABLE IF EXISTS employee_time_worked;")
+##cursor.execute("DROP TABLE IF EXISTS zip_lookup;")
+##cursor.execute("DROP TABLE IF EXISTS department;")
+##cursor.execute("DROP TABLE IF EXISTS position;")
 
 ##create bacchus_wine database
 cursor.execute("CREATE DATABASE bacchus_wine")
@@ -47,25 +47,25 @@ cursor.execute("CREATE USER 'bacchus_user'@'localhost' IDENTIFIED WITH mysql_nat
 cursor.execute("GRANT ALL PRIVILEGES ON bacchus_wine.* TO 'bacchus_user'@'localhost'")
 
 ##create tables
-cursor.execute("CREATE TABLE supply (Supplier_ID INT(11) NOT NULL, Name VARCHAR(45) NOT NULL, Street_Address_1 VARCHAR(35) NOT NULL, Street_Address_2 VARCHAR(35), Zip INT(5) NOT NULL, Contact_First_Name VARCHAR(25) NOT NULL, Contact_Last_Name VARCHAR(25) NOT NULL, Phone_Number VARCHAR(15) NOT NULL, Email_Address VARCHAR(45), Order_Method ENUM(“Phone”,”Post”,”Online”), Order_Method_Details VARCHAR(45), Contract_Delivery_ETA BIT(1), Contract_Delivery_ETA_Details VARCHAR(45), Active BIT(1) NOT NULL, PRIMARY KEY(Supplier_ID));")
+cursor.execute("CREATE TABLE supply (Supplier_ID INT(11) NOT NULL, Name VARCHAR(45) NOT NULL, Street_Address_1 VARCHAR(35) NOT NULL, Street_Address_2 VARCHAR(35), Zip INT(5) NOT NULL, Contact_First_Name VARCHAR(25) NOT NULL, Contact_Last_Name VARCHAR(25) NOT NULL, Phone_Number VARCHAR(15) NOT NULL, Email_Address VARCHAR(45), Order_Method ENUM('Phone', 'Post', 'Online'), Order_Method_Details VARCHAR(45), Contract_Delivery_ETA BIT(1), Contract_Delivery_ETA_Details VARCHAR(45), Active BIT(1) NOT NULL, PRIMARY KEY(Supplier_ID));")
 
 ##
 cursor.execute("CREATE TABLE supplies (Supply_ID INT(11) NOT NULL, Name VARCHAR(25) NOT NULL, Description VARCHAR(45), Onhand_Quantity INT(11) NOT NULL, Unit_Price DECIMAL(6,2) NOT NULL, Supplier_ID INT(11) NOT NULL, Supply_Order_ID INT(20) NOT NULL, PRIMARY KEY(Supply_ID), CONSTRAINT fk_supplier FOREIGN KEY(Supplier_ID) REFERENCES supplier(Supplier_ID), CONSTRAINT fk_supply_order FOREIGN KEY(Supply_Order_ID) REFERENCES supply_order(Supply_Order_ID));")
 
 ##
-cursor.execute("CREATE TABLE supply_order (Supply_Order_ID INT(20) NOT NULL, Total_Cost DECIMAL(10,2) NOT NULL, Order_Date DATETIME NOT NULL, Order_Method ENUM(“Phone”,”Post”,”Online”), Order_Tracking_Number VARCHAR(30) NOT NULL, Order_Delivery_Carrier VARCHAR(10), Order_Estimated_Delivery_Date DATETIME, Order_Actual_Delivery_Date DATETIME NOT NULL, Supply_ID INT(11) NOT NULL, Supplier_ID INT(11) NOT NULL, PRIMARY KEY(Supply_Order_ID), CONSTRAINT fk_supplies FOREIGN KEY(Supply_ID) REFERENCES supplies(Supply_ID), CONSTRAINT fk_supplier FOREIGN KEY(Supplier_ID) REFERENCES supplier(Supplier_ID));")
+cursor.execute("CREATE TABLE supply_order (Supply_Order_ID INT(20) NOT NULL, Total_Cost DECIMAL(10,2) NOT NULL, Order_Date DATETIME NOT NULL, Order_Method ENUM('Phone', 'Post', 'Online'), Order_Tracking_Number VARCHAR(30) NOT NULL, Order_Delivery_Carrier VARCHAR(10), Order_Estimated_Delivery_Date DATETIME, Order_Actual_Delivery_Date DATETIME NOT NULL, Supply_ID INT(11) NOT NULL, Supplier_ID INT(11) NOT NULL, PRIMARY KEY(Supply_Order_ID), CONSTRAINT fk_supplies FOREIGN KEY(Supply_ID) REFERENCES supplies(Supply_ID), CONSTRAINT fk_supplier FOREIGN KEY(Supplier_ID) REFERENCES supplier(Supplier_ID));")
         
 ##
 cursor.execute("CREATE TABLE supply_order_details (PK_Supply_Order_ID INT(20) NOT NULL, PK_Supply_ID INT(11) NOT NULL, Quantity_Ordered INT(70) NOT NULL, PRIMARY KEY(Supply_Order_ID), PRIMARY KEY(Supply_ID));")
 
 ##
-cursor.execute("CREATE TABLE wine (Wine_ID INT(11) NOT NULL, Name VARCHAR(45) NOT NULL, Style ENUM(“Merlot”,”Cabernet”,”Chablis”,”ChardoNOT NULL,ay”) NOT NULL, Onhand_Quantity INT(7) NOT NULL, Batch_ID INT(20) NOT NULL, PRIMARY KEY(Wine_ID), CONSTRAINT fk_batch KEY(Batch_ID) REFERENCES batch(Batch_ID));")
+cursor.execute("CREATE TABLE wine (Wine_ID INT(11) NOT NULL, Name VARCHAR(45) NOT NULL, Style ENUM('Merlot', 'Cabernet', 'Chablis', 'Chardonnay') NOT NULL, Onhand_Quantity INT(7) NOT NULL, Batch_ID INT(20) NOT NULL, PRIMARY KEY(Wine_ID), CONSTRAINT fk_batch KEY(Batch_ID) REFERENCES batch(Batch_ID));")
 
 ##
 cursor.execute("CREATE TABLE batch (Batch_ID INT(20) NOT NULL, Bottled_Date DATETIME, Expiration_Date DATETIME NOT NULL, Quantity INT(7) NOT NULL, Wine_ID INT(11) NOT NULL, PRIMARY KEY(Batch_ID), CONSTRAINT fk_wine FOREIGN KEY(Wine_ID) REFERENCES wine(Wine_ID));")
 
 ##
-cursor.execute("CREATE TABLE wine_order (Wine_Order_ID INT(20) NOT NULL, Total_Cost DECIMAL(10, 2) NOT NULL, Order_Date DATETIME NOT NULL, Order_Method ENUM(“Phone”,”Post”,”Online”), Order_Estimated_Delivery_Date DATETIME, Order_Actual_Delivery_Date DATETIME NOT NULL, FK_Wine_ID INT(11) NOT NULL, FK_Distributor_ID INT(11) NOT NULL, PRIMARY KEY(Wine_Order_ID), CONSTRAINT fk_wine FOREIGN KEY(Wine_ID) REFERENCES wine(Wine_ID), CONSTRAINT fk_distributor FOREIGN KEY(Distributor_ID) REFERENCES distributor(Distributor_ID));")
+cursor.execute("CREATE TABLE wine_order (Wine_Order_ID INT(20) NOT NULL, Total_Cost DECIMAL(10, 2) NOT NULL, Order_Date DATETIME NOT NULL, Order_Method ENUM('Phone', 'Post', 'Online'), Order_Estimated_Delivery_Date DATETIME, Order_Actual_Delivery_Date DATETIME NOT NULL, FK_Wine_ID INT(11) NOT NULL, FK_Distributor_ID INT(11) NOT NULL, PRIMARY KEY(Wine_Order_ID), CONSTRAINT fk_wine FOREIGN KEY(Wine_ID) REFERENCES wine(Wine_ID), CONSTRAINT fk_distributor FOREIGN KEY(Distributor_ID) REFERENCES distributor(Distributor_ID));")
 
 ##
 cursor.execute("CREATE TABLE wine_order_details (Wine_Order_ID INT(20) NOT NULL, Wine_ID INT(11) NOT NULL, Quantity_Ordered INT(7) NOT NULL, PRIMARY KEY(Wine_Order_ID), PRIMARY KEY(Wine_ID));")
@@ -96,4 +96,3 @@ cursor.execute("CREATE TABLE position (PK_Position_ID INT(10) NOT NULL, Position
 
 
 db.close()
-
