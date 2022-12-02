@@ -17,6 +17,26 @@ db = mysql.connector.connect(**config)
 
 cursor = db.cursor()
 
+## drop statements
+cursor.execute("DROP DATABASE IF EXISTS 'bacchus_wine';")
+cursor.execute("DROP USER IF EXISTS 'bacchus_user'@'localhost';")
+cursor.execute("DROP TABLE IF EXISTS 'supplier';")
+cursor.execute("DROP TABLE IF EXISTS 'supplies';")
+cursor.execute("DROP TABLE IF EXISTS 'supply_order';")
+cursor.execute("DROP TABLE IF EXISTS 'supply_order_details';")
+cursor.execute("DROP TABLE IF EXISTS 'wine';")
+cursor.execute("DROP TABLE IF EXISTS 'batch';")
+cursor.execute("DROP TABLE IF EXISTS 'wine_order';")
+cursor.execute("DROP TABLE IF EXISTS 'wine_order_details';")
+cursor.execute("DROP TABLE IF EXISTS 'wine_distrbutor_details';")
+cursor.execute("DROP TABLE IF EXISTS 'distributor';")
+cursor.execute("DROP TABLE IF EXISTS 'employee';")
+cursor.execute("DROP TABLE IF EXISTS 'employe_alternate';")
+cursor.execute("DROP TABLE IF EXISTS 'employee_time_worked';")
+cursor.execute("DROP TABLE IF EXISTS 'zip_lookup';")
+cursor.execute("DROP TABLE IF EXISTS 'department';")
+cursor.execute("DROP TABLE IF EXISTS 'position';")
+
 ##create bacchus_wine database
 cursor.execute("CREATE DATABASE bacchus_wine")
 
