@@ -20,8 +20,8 @@ cursor = db.cursor()
 ## drop statements
 ##cursor.execute("DROP DATABASE IF EXISTS 'bacchus_wine';")
 ##cursor.execute("DROP USER IF EXISTS 'bacchus_user'@'localhost';")
-##cursor.execute("DROP TABLE IF EXISTS supplier;")
-##cursor.execute("DROP TABLE IF EXISTS supplies;")
+cursor.execute("DROP TABLE IF EXISTS supplier;")
+cursor.execute("DROP TABLE IF EXISTS supplies;")
 ##cursor.execute("DROP TABLE IF EXISTS supply_order;")
 ##cursor.execute("DROP TABLE IF EXISTS supply_order_details;")
 ##cursor.execute("DROP TABLE IF EXISTS wine;")
@@ -46,7 +46,7 @@ cursor.execute("USE bacchus_wine;")
 ##cursor.execute("GRANT ALL PRIVILEGES ON bacchus_wine.* TO 'bacchus_user'@'localhost'")
 
 ##create tables
-cursor.execute("CREATE TABLE supply (Supplier_ID INT(11) NOT NULL, Name VARCHAR(45) NOT NULL, Street_Address_1 VARCHAR(35) NOT NULL, Street_Address_2 VARCHAR(35), Zip INT(5) NOT NULL, Contact_First_Name VARCHAR(25) NOT NULL, Contact_Last_Name VARCHAR(25) NOT NULL, Phone_Number VARCHAR(15) NOT NULL, Email_Address VARCHAR(45), Order_Method ENUM('Phone', 'Post', 'Online'), Order_Method_Details VARCHAR(45), Contract_Delivery_ETA BIT(1), Contract_Delivery_ETA_Details VARCHAR(45), Active BIT(1) NOT NULL, PRIMARY KEY(Supplier_ID));")
+cursor.execute("CREATE TABLE supplier (Supplier_ID INT(11) NOT NULL, Name VARCHAR(45) NOT NULL, Street_Address_1 VARCHAR(35) NOT NULL, Street_Address_2 VARCHAR(35), Zip INT(5) NOT NULL, Contact_First_Name VARCHAR(25) NOT NULL, Contact_Last_Name VARCHAR(25) NOT NULL, Phone_Number VARCHAR(15) NOT NULL, Email_Address VARCHAR(45), Order_Method ENUM('Phone', 'Post', 'Online'), Order_Method_Details VARCHAR(45), Contract_Delivery_ETA BIT(1), Contract_Delivery_ETA_Details VARCHAR(45), Active BIT(1) NOT NULL, PRIMARY KEY(Supplier_ID));")
 
 ##
 cursor.execute("CREATE TABLE supplies (Supply_ID INT NOT NULL, Name VARCHAR(25) NOT NULL, Description VARCHAR(45), Onhand_Quantity INT NOT NULL, Unit_Price DECIMAL(6,2) NOT NULL, Supplier_ID INT NOT NULL, Supply_Order_ID INT NOT NULL, PRIMARY KEY(Supply_ID), CONSTRAINT fk_supplier FOREIGN KEY(Supplier_ID) REFERENCES supplier(Supplier_ID), CONSTRAINT fk_supply_order FOREIGN KEY(Supply_Order_ID) REFERENCES supply_order(Supply_Order_ID));")
